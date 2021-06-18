@@ -16,7 +16,7 @@ function onSubmit(e) {
   e.preventDefault();
 
   apiService.query = e.currentTarget.elements.query.value;
-  console.log(apiService.query);
+  apiService.resetPage();
   apiService.fetchImages();
 }
 
