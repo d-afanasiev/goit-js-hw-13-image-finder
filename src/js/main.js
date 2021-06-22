@@ -17,6 +17,7 @@ refs.btnLoadMore.addEventListener('click', onLoadMore);
 function onSubmit(e) {
   e.preventDefault();
 
+  clearContainer();
   apiService.query = e.currentTarget.elements.query.value;
   apiService.resetPage();
   apiService.fetchImages().then(appendGallery);
@@ -36,4 +37,8 @@ function scrollIntoView() {
     behavior: 'smooth',
     block: 'nearest',
   });
+}
+
+function clearContainer() {
+  refs.containerGallery.innerHTML = '';
 }
