@@ -1,3 +1,6 @@
+const API_KEY = '22136016-e39418b2246c5d0d9deda411e';
+const BASE_URL = 'https://pixabay.com/api';
+
 export default class ApiService {
   constructor() {
     this.searchQuery = '';
@@ -5,8 +8,7 @@ export default class ApiService {
   }
 
   fetchImages() {
-    console.log(this);
-    const url = `https://pixabay.com/api/?key=22136016-e39418b2246c5d0d9deda411e&q=${this.searchQuery}&per_page=12&page=${this.page}`;
+    const url = `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&per_page=12&page=${this.page}`;
     return fetch(url)
       .then(result => result.json())
       .then(data => {
