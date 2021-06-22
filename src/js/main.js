@@ -17,10 +17,12 @@ refs.btnLoadMore.addEventListener('click', onLoadMore);
 function onSubmit(e) {
   e.preventDefault();
 
-  clearContainer();
   apiService.query = e.currentTarget.elements.query.value;
   apiService.resetPage();
-  apiService.fetchImages().then(appendGallery);
+  apiService.fetchImages().then(data => {
+    clearContainer();
+    appendGallery(data);
+  });
 }
 
 function onLoadMore() {
