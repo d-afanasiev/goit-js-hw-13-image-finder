@@ -7,9 +7,12 @@ export default class ApiService {
   fetchImages() {
     console.log(this);
     const url = `https://pixabay.com/api/?key=22136016-e39418b2246c5d0d9deda411e&q=${this.searchQuery}&per_page=12&page=${this.page}`;
-    fetch(url)
+    return fetch(url)
       .then(result => result.json())
-      .then(data => (this.page += 1));
+      .then(data => {
+        this.page += 1;
+        return data.hits;
+      });
   }
 
   resetPage() {

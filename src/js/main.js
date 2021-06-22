@@ -1,9 +1,11 @@
 import ApiService from './apiService';
+import cards from '../partials/cards';
 
 const refs = {
   formSearch: document.querySelector('.search-form'),
-  containerGallery: document.querySelector('.js-gallery'),
+  containerGallery: document.querySelector('.gallery'),
   btnLoadMore: document.querySelector('[data-value="load-more"]'),
+  gallery: document.querySelector('.gallery'),
 };
 
 const apiService = new ApiService();
@@ -17,9 +19,21 @@ function onSubmit(e) {
 
   apiService.query = e.currentTarget.elements.query.value;
   apiService.resetPage();
-  apiService.fetchImages();
+  apiService.fetchImages().then(appendGallery);
 }
 
 function onLoadMore() {
-  apiService.fetchImages();
+  apiService.fetchImages().then(appendGallery);
+  setTimeout(scrollIntoView, 500);
+}
+
+function appendGallery(result) {
+  refs.containerGallery.insertAdjacentHTML('beforeend', cards(result));
+}
+
+function scrollIntoView() {
+  refs.containerGallery.scrollIntoView({
+    behavior: 'smooth',
+    block: 'nearest',
+  });
 }

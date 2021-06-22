@@ -35,3 +35,37 @@
   display: block;
   margin: 0 auto;
 }
+
+.gallery {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.gallery-item {
+  margin-right: 15px;
+  margin-bottom: 15px;
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
+.gallery-image {
+  height: 370px;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.stats-item {
+  display: flex;
+  align-items: center;
+}
+
+.material-icons {
+  padding-right: 10px;
+}
