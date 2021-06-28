@@ -29,15 +29,18 @@ function onSubmit(e) {
 
 function onLoadMore() {
   fetchGallery();
-  setTimeout(scrollIntoView, 500);
+  // setTimeout(scrollIntoView, 500);
 }
 
 function fetchGallery() {
   loadMoreBtn.disable();
-  apiService.fetchImages().then(data => {
-    appendGallery(data);
-    loadMoreBtn.enable();
-  });
+  apiService
+    .fetchImages()
+    .then(data => {
+      appendGallery(data);
+      loadMoreBtn.enable();
+    })
+    .then(data => scrollIntoView());
 }
 
 function appendGallery(result) {
@@ -45,9 +48,11 @@ function appendGallery(result) {
 }
 
 function scrollIntoView() {
-  refs.containerGallery.scrollIntoView({
+  let galleryItem = document.querySelectorAll('.gallery-item');
+  let indexGalleryItem = galleryItem.length - 11;
+  galleryItem[indexGalleryItem].scrollIntoView({
     behavior: 'smooth',
-    block: 'nearest',
+    block: 'start',
   });
 }
 
