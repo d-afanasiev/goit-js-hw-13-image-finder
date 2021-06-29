@@ -7,14 +7,13 @@ export default class ApiService {
     this.page = 1;
   }
 
-  fetchImages() {
+  async fetchImages() {
     const url = `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&per_page=12&page=${this.page}`;
-    return fetch(url)
-      .then(result => result.json())
-      .then(data => {
-        this.page += 1;
-        return data.hits;
-      });
+    const fetchUrl = await fetch(url);
+    const resultFetch = await fetchUrl.json();
+    this.page += 1;
+
+    return resultFetch.hits;
   }
 
   resetPage() {

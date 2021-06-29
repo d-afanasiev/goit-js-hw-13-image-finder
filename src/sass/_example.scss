@@ -13,6 +13,10 @@
   margin-right: 20px;
 }
 
+.wrapper {
+  padding: 20px 0;
+}
+
 .search-form button,
 .wrapper > button {
   padding: 12px 20px;
@@ -41,6 +45,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding: 0;
 }
 
 .gallery-item {
@@ -76,4 +81,48 @@ button.is-hidden {
 
 span.is-hidden {
   display: none;
+}
+
+.basicLightbox:after {
+  content: '';
+  position: absolute;
+  top: 1.8rem;
+  right: 1.8rem;
+  width: 2em;
+  height: 2em;
+  background: url(../images/close.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.arrow-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  color: #6c757d;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  cursor: pointer;
+  border: 2px solid #6c757d;
+  border-radius: 50%;
+}
+.arrow-top:before {
+  content: '▲';
+}
+
+.arrow-top:hover {
+  color: #5c636a;
+  border-color: #5c636a;
+}
+
+.arrow-hidden {
+  display: none;
+}
+
+.arrow-show {
+  display: flex;
 }
