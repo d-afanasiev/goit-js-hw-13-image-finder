@@ -1,14 +1,8 @@
+import { Notify } from 'notiflix';
+
 import ApiService from './apiService';
 import cards from '../partials/cards';
 import LoadMoreBtn from './load-more-btn';
-
-import { error } from '@pnotify/core';
-import * as PNotifyAnimate from '@pnotify/animate';
-import { defaults } from '@pnotify/animate';
-defaults.inClass = 'fadeInDown';
-defaults.outClass = 'fadeOutUp';
-import '@pnotify/core/dist/BrightTheme.css';
-import '@pnotify/core/dist/PNotify.css';
 
 import * as basicLightbox from 'basiclightbox';
 
@@ -39,10 +33,15 @@ function onSubmit(e) {
   apiService
     .fetchImages()
     .then(data => {
-      appendGallery(data);
+      if (!data) {
+        Notify.failure('Sorry, there are no images matching your search query. Please try again.');
+        return loadMoreBtn.hide();
+      }
+      Notify.success(`Hooray! We found ${data.totalHits} images.`);
+      appendGallery(data.hits);
       loadMoreBtn.enable();
 
-      if (data.length === 0) {
+      if (data.length === 0 || data.totalImageShow >= data.totalHits) {
         loadMoreBtn.hide();
       }
     })
@@ -57,10 +56,16 @@ function onLoadMore() {
   apiService
     .fetchImages()
     .then(data => {
-      appendGallery(data);
+      appendGallery(data.hits);
       loadMoreBtn.enable();
+      if (data.totalImageShow >= data.totalHits) {
+        loadMoreBtn.hide();
+      }
+      return data;
     })
-    .then(data => scrollIntoView())
+    .then(data => {
+      scrollIntoView(data);
+    })
     .catch(error => {
       errorMessage(error);
       loadMoreBtn.hide();
@@ -71,9 +76,13 @@ function appendGallery(result) {
   refs.containerGallery.insertAdjacentHTML('beforeend', cards(result));
 }
 
-function scrollIntoView() {
+function scrollIntoView(data) {
+  let hitsLength = data.hits.length;
+  if (hitsLength === 1) {
+    hitsLength += 1;
+  }
   let galleryItem = document.querySelectorAll('.gallery-item');
-  let indexGalleryItem = galleryItem.length - 11;
+  let indexGalleryItem = galleryItem.length - (hitsLength - 1);
   galleryItem[indexGalleryItem].scrollIntoView({
     behavior: 'smooth',
     block: 'start',
@@ -85,9 +94,7 @@ function clearContainer() {
 }
 
 function errorMessage(message) {
-  error({
-    text: `${message}`,
-  });
+  Notify.failure(message);
 }
 
 refs.containerGallery.addEventListener('click', showBigImage);
