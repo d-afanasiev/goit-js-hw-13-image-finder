@@ -83,6 +83,7 @@ function scrollIntoView(data) {
   }
   let galleryItem = document.querySelectorAll('.gallery-item');
   let indexGalleryItem = galleryItem.length - (hitsLength - 1);
+  console.log(indexGalleryItem);
   galleryItem[indexGalleryItem].scrollIntoView({
     behavior: 'smooth',
     block: 'start',
