@@ -5,21 +5,16 @@ import ApiService from './apiService';
 import cards from '../partials/cards';
 import LoadMoreBtn from './load-more-btn';
 
-import * as basicLightbox from 'basiclightbox';
-
 const refs = {
   formSearch: document.querySelector('.search-form'),
   containerGallery: document.querySelector('.gallery'),
-  gallery: document.querySelector('.gallery'),
   arrowTop: document.querySelector('.arrow-top'),
   wrapperGallery: document.querySelector('.wrapper'),
 };
 
 const loadMoreBtn = new LoadMoreBtn({ selector: '[data-value="load-more"]', hidden: true });
 const apiService = new ApiService();
-var lightbox = new SimpleLightbox('.gallery a', {
-  overlay: true,
-});
+const lightbox = new SimpleLightbox('.gallery a');
 
 lightbox.on('show.simplelightbox', function (e) {
   e.preventDefault();
@@ -93,7 +88,6 @@ function scrollIntoView(data) {
   }
   let galleryItem = document.querySelectorAll('.gallery-item');
   let indexGalleryItem = galleryItem.length - (hitsLength - 1);
-  console.log(indexGalleryItem);
   galleryItem[indexGalleryItem].scrollIntoView({
     behavior: 'smooth',
     block: 'start',
