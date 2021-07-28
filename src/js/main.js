@@ -69,7 +69,6 @@ function onLoadMore() {
       return data;
     })
     .then(data => {
-      console.log(data);
       if (data.totalImageShow >= data.totalHits) {
         Notify.info("We're sorry, but you've reached the end of search results.");
       }
